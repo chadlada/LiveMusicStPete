@@ -7,8 +7,9 @@ export function App() {
     <div>
       <header>
         <h1>Live Music - St Pete</h1>
+        <nav>Home - SignUp - SignIn - Reviews</nav>
       </header>
-      <nav>Home - SignUp - SignIn - Reviews</nav>
+
       <VenueLanding />
 
       <footer>

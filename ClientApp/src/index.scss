@@ -27,10 +27,38 @@ body {
 }
 
 header {
-  background-color: #bb89ba;
+  // background-color: #bb89ba;
   opacity: 0.8;
   text-align: center;
 }
 nav {
   text-align: center;
+}
+
+h2 {
+  font-size: 15px;
+}
+
+footer {
+  background-color: white;
+}
+
+main.home {
+  background-color: #dfdada;
+  opacity: 0.8;
+  width: 21rem;
+  padding: 2rem;
+  margin-left: 17rem;
+}
+
+.search {
+  padding-left: 4rem;
+}
+
+.map {
+  padding-left: 2rem;
+}
+
+.results {
+  list-style: none;
 }
