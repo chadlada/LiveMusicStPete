@@ -19,4 +19,18 @@ html {
 body {
   margin: 0;
   min-height: 100%;
+  background-image: url('./images/pier1.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  // width: 200px;
+  height: 100vh;
+}
+
+header {
+  background-color: #bb89ba;
+  opacity: 0.8;
+  text-align: center;
+}
+nav {
+  text-align: center;
 }
