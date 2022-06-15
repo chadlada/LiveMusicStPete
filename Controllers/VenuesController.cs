@@ -31,11 +31,18 @@ namespace LiveMusicStPete.Controllers
         // Returns a list of all your Venues
         //
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Venue>>> GetVenues()
+        public async Task<ActionResult<IEnumerable<Venue>>> GetVenues(string filter)
         {
             // Uses the database context in `_context` to request all of the Venues, sort
             // them by row id and return them as a JSON array.
+if (filter == null) {
             return await _context.Venues.OrderBy(row => row.Id).ToListAsync();
+} else {
+    // Return the filtered list of venues
+     return await _context.Venues.Where(venue => venue.Name.ToLower().Contains(filter.ToLower()))
+     .ToListAsync();
+}
+
         }
 
         // GET: api/Venues/5

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 
 import map from '../images/map.png'
@@ -6,10 +6,22 @@ import { CSSStarsProperties, VenueType } from '../types'
 import { SingleVenueFromList } from '../components/SingleVenueFromList'
 
 export function VenueLanding() {
+  const [filterText, setFilterText] = useState('')
+
   const { data: venues = [] } = useQuery<VenueType[]>(
-    'venues',
+    ['venues', filterText],
     async function () {
-      const response = await fetch('/api/venues')
+      // let url = '/api/venues'
+
+      // if (filterText.length !== 0) {
+      //   url = `/api/venues?filter=${filterText}`
+      // }
+      const url =
+        filterText.length === 0
+          ? 'api/venues'
+          : `api/venues?filter=${filterText}`
+
+      const response = await fetch(url)
       return response.json()
     }
   )
@@ -22,7 +34,14 @@ export function VenueLanding() {
       </p>
       <main className="home-content">
         <form className="search">
-          <input type="text" placeholder="Search..." />
+          <input
+            type="text"
+            placeholder="Search..."
+            value={filterText}
+            onChange={function (event) {
+              setFilterText(event.target.value)
+            }}
+          />
         </form>
         <br />
 
