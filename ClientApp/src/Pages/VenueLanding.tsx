@@ -1,8 +1,18 @@
 import React from 'react'
-import { CSSStarsProperties } from '../types'
+import { useQuery } from 'react-query'
+
 import map from '../images/map.png'
+import { CSSStarsProperties, VenueType } from '../types'
 
 export function VenueLanding() {
+  const { data: venues = [] } = useQuery<VenueType[]>(
+    'venues',
+    async function () {
+      const response = await fetch('/api/venues')
+      return response.json()
+    }
+  )
+
   return (
     <>
       <br />
@@ -20,14 +30,14 @@ export function VenueLanding() {
         </section>
 
         <ul className="results">
-          <li>
-            <h2>Ruby&apos;s Elixir</h2>
-            <address>8005 Benjamin Rd, Tampa, FL 33634</address>
-          </li>
-          <li>
-            <h2>Hideaway Cafe</h2>
-            <address>5537 Sheldon Rd, Tampa, FL 33615</address>
-          </li>
+          {venues.map(function (venue) {
+            return (
+              <li key={venue.id}>
+                <h2>{venue.name}</h2>
+                <address>{venue.address}</address>
+              </li>
+            )
+          })}
         </ul>
       </main>
     </>
