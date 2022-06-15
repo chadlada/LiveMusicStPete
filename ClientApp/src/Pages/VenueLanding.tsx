@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 
 import map from '../images/map.png'
 import { CSSStarsProperties, VenueType } from '../types'
+import { SingleVenueFromList } from '../components/SingleVenueFromList'
 
 export function VenueLanding() {
   const { data: venues = [] } = useQuery<VenueType[]>(
@@ -31,12 +32,7 @@ export function VenueLanding() {
 
         <ul className="results">
           {venues.map(function (venue) {
-            return (
-              <li key={venue.id}>
-                <h2>{venue.name}</h2>
-                <address>{venue.address}</address>
-              </li>
-            )
+            return <SingleVenueFromList key={venue.id} venue={venue} />
           })}
         </ul>
       </main>
