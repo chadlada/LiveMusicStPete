@@ -1,4 +1,12 @@
 {
   "name": "LiveMusicStPete",
-  "private": "true"
+  "private": "true",
+  "dependencies": {
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0"
+  },
+  "devDependencies": {
+    "@types/react-router": "^5.1.18",
+    "@types/react-router-dom": "^5.3.3"
+  }
 }
