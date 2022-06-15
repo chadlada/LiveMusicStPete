@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 
-import map from '../images/map.png'
+import map from '../images/mapstpete.png'
 import { CSSStarsProperties, VenueType } from '../types'
 import { SingleVenueFromList } from '../components/SingleVenueFromList'
 
@@ -54,6 +54,7 @@ export function VenueLanding() {
             return <SingleVenueFromList key={venue.id} venue={venue} />
           })}
         </ul>
+        <br />
       </main>
     </>
   )
