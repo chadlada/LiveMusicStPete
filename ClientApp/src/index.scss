@@ -93,7 +93,7 @@ div.field {
   display: flex;
   flex-direction: column;
   align-items: center;
-  opacity: 0.8;
+  opacity: 0.93;
   border-radius: 1rem;
   // margin-left: 12px;
   // margin-top: 3rem;
@@ -154,10 +154,11 @@ div.field {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 12px;
-    opacity: 0.8;
+    // margin-left: 12px;
+    opacity: 0.93;
     border-radius: 1rem;
-    margin-top: 3rem;
+    margin-top: 1rem;
+    margin-bottom: 6rem;
   }
 
   .map {
@@ -178,5 +179,9 @@ div.field {
   .footer {
     display: flex;
     justify-content: center;
+  }
+  .uploadpic {
+    margin-bottom: 2rem;
+    margin-top: 2rem;
   }
 }

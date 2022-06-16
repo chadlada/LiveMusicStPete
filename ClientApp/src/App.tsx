@@ -1,26 +1,35 @@
 import React from 'react'
 import { NewVenue } from './Pages/NewVenue'
-import { SignIn } from './Pages/SignIn'
-import { SignUp } from './Pages/SignUp'
-import { Venue } from './Pages/Venue'
+// import { SignIn } from './Pages/SignIn'
+// import { SignUp } from './Pages/SignUp'
+// import { Venue } from './Pages/Venue'
 import { VenueLanding } from './Pages/VenueLanding'
 import git from './images/GitHub-Mark.png'
 import linkedin from './images/linkedin.png'
-// import { Route, Routes } from 'react-router'
+import { Route, Routes } from 'react-router'
+import { SignUp } from './Pages/SignUp'
+import { SignIn } from './Pages/SignIn'
+import { Link } from 'react-router-dom'
 
 export function App() {
   return (
     <div>
       <header>
         <h1>Live Music - St Pete</h1>
-        <nav>Home - SignUp - SignIn - Reviews</nav>
+        <nav>
+          <Link to="/">Home</Link> - <Link to="/signup">SignUp</Link> -{' '}
+          <Link to="/signin"> SignIn </Link> - <Link to="new">Add Venue</Link>
+        </nav>
+        <i>Welcome Back, Steve!</i>
       </header>
       <br />
 
-      <VenueLanding />
-      {/* <Routes>
+      <Routes>
         <Route path="/" element={<VenueLanding />} />
-      </Routes> */}
+        <Route path="/new" element={<NewVenue />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
+      </Routes>
       <footer>
         <div className="footer">
           <span className="link">
