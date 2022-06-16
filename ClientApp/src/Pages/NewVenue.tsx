@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router'
-import { VenueType } from '../types'
+import { APIError, VenueType } from '../types'
 
 async function submitNewVenue(venueToCreate: VenueType) {
   const response = await fetch('/api/Venues', {
@@ -10,7 +10,11 @@ async function submitNewVenue(venueToCreate: VenueType) {
     body: JSON.stringify(venueToCreate),
   })
 
-  return response.json()
+  if (response.ok) {
+    return response.json()
+  } else {
+    throw await response.json()
+  }
 }
 
 export function NewVenue() {
@@ -22,10 +26,16 @@ export function NewVenue() {
     address: '',
     telephone: '',
   })
+
+  const [errorMessage, setErrorMessage] = useState('')
   const createNewVenue = useMutation(submitNewVenue, {
     onSuccess: function () {
       // This happens if we successfuly update venue
       navigate('/')
+    },
+    onError: function (apiError: APIError) {
+      const newMessage = Object.values(apiError.errors).join(' ')
+      setErrorMessage(newMessage)
     },
   })
 
@@ -48,6 +58,7 @@ export function NewVenue() {
   return (
     <>
       <form onSubmit={handleFormSubmit}>
+        {errorMessage ? <p className="form-error">{errorMessage}</p> : null}
         <div className="allinputs">
           <div className="field">
             <label className="label">Name</label>
@@ -56,7 +67,7 @@ export function NewVenue() {
                 className="input"
                 name="name"
                 type="text"
-                placeholder="e.g Alex Smith"
+                placeholder="e.g Venue Name Here.."
                 value={newVenue.name}
                 onChange={handleStringFieldChange}
               />

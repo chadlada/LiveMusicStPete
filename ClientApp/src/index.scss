@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Fascinate&display=swap');
 
 :root {
+  --red-0: #991d42;
   font: 16px / 1 sans-serif;
 
   // SDG brand colors
@@ -82,6 +83,14 @@ main.home-content {
   margin-left: 1rem;
 }
 
+.form-error {
+  padding: 1.25rem;
+  font-size: 12px;
+  background-color: var(--red-0);
+  color: white;
+  text-align: center;
+}
+
 div.field {
   width: 16rem;
 }
@@ -159,6 +168,13 @@ div.field {
     border-radius: 1rem;
     margin-top: 1rem;
     margin-bottom: 6rem;
+  }
+
+  .form-error {
+    padding: 1.25rem;
+    font-size: 12px;
+    background-color: var(--red-0);
+    color: white;
   }
 
   .map {
