@@ -8,15 +8,24 @@ import git from './images/GitHub-Mark.png'
 import linkedin from './images/linkedin.png'
 import { Route, Routes } from 'react-router'
 import { Link } from 'react-router-dom'
+import { config } from '@fortawesome/fontawesome-svg-core'
+console.log(config.autoA11y) // true
 
 export function App() {
   return (
     <div>
       <header>
-        <h1>Live Music - St Pete</h1>
+        <div className="nav-top">
+          <Link to="/">
+            <i className="fa-solid fa-house"></i>
+          </Link>
+          <h1>Live Music - St Pete</h1>
+        </div>
+
         <nav>
-          <Link to="/">Home</Link> - <Link to="/signup">SignUp</Link> -{' '}
-          <Link to="/signin"> SignIn </Link> - <Link to="new">Add Venue</Link>
+          <br />
+          <Link to="/signup">SignUp</Link>-<Link to="/signin"> SignIn </Link>-
+          <Link to="new">Add Venue</Link>
         </nav>
         <i>Welcome Back, Steve!</i>
       </header>
@@ -45,13 +54,14 @@ export function App() {
         <h2>Created by Chad Lada</h2>
         <span className="git">
           <a href="https://github.com/chadlada">
-            <img
+            <i className="fa-brands fa-github"></i>
+            {/* <img
               src={git}
               className="gitimage"
               alt="github"
               width="50"
               height="50"
-            />
+            /> */}
           </a>
         </span>
         {/* </div> */}

@@ -32,7 +32,7 @@ export function VenueLanding() {
       <p className="landing">
         Find local live music venues in the Sunshine City!
       </p>
-      <main className="home-content">
+      <main className="allinputs">
         <form className="search">
           <input
             type="text"
@@ -46,7 +46,13 @@ export function VenueLanding() {
         <br />
 
         <section className="map">
-          <img alt="Example Map" src={map} width="250" height="200" />
+          <img
+            className="mapmap"
+            alt="Example Map"
+            src={map}
+            width="250"
+            height="200"
+          />
         </section>
 
         <ul className="results">

@@ -25,6 +25,7 @@ export function NewVenue() {
     description: '',
     address: '',
     telephone: '',
+    reviews: [],
   })
 
   const [errorMessage, setErrorMessage] = useState('')

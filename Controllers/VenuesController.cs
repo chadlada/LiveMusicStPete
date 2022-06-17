@@ -36,10 +36,13 @@ namespace LiveMusicStPete.Controllers
             // Uses the database context in `_context` to request all of the Venues, sort
             // them by row id and return them as a JSON array.
 if (filter == null) {
-            return await _context.Venues.OrderBy(row => row.Id).ToListAsync();
+            return await _context.Venues.OrderBy(row => row.Id)
+            .Include(restaurant => restaurant.Reviews)
+            .ToListAsync();
 } else {
     // Return the filtered list of venues
      return await _context.Venues.Where(venue => venue.Name.ToLower().Contains(filter.ToLower()))
+     .Include(restaurant => restaurant.Reviews)
      .ToListAsync();
 }
 
@@ -54,8 +57,8 @@ if (filter == null) {
         [HttpGet("{id}")]
         public async Task<ActionResult<Venue>> GetVenue(int id)
         {
-            // Find the venue in the database using `FindAsync` to look it up by id
-            var venue = await _context.Venues.FindAsync(id);
+// Find the restaurant in the database using Include to ensure we have the associated reviews
+var venue = await _context.Venues.Include(venue => venue.Reviews).Where(venue => venue.Id == id).FirstOrDefaultAsync();
 
             // If we didn't find anything, we receive a `null` in return
             if (venue == null)

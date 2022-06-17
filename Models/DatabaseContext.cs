@@ -15,6 +15,8 @@ namespace LiveMusicStPete.Models
 
         // Add database tables here
         public DbSet<Venue> Venues { get; set; }
+        // Tell the context about the Review collection/table
+        public DbSet<Review> Reviews { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

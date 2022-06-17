@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace LiveMusicStPete.Models
@@ -14,5 +15,8 @@ namespace LiveMusicStPete.Models
 
         public string Address { get; set; }
         public string Telephone { get; set; }
+
+        //One venue has many reviews
+        public List<Review> Reviews { get; set; }
     }
 }

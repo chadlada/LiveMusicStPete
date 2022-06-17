@@ -5,11 +5,12 @@ export interface CSSStarsProperties extends CSSProperties {
 }
 
 export type VenueType = {
-  id?: number | undefined
+  id?: number
   name: string
   description: string
   address: string
   telephone: string
+  reviews: ReviewType[]
 }
 
 export type APIError = {
@@ -18,4 +19,12 @@ export type APIError = {
   title: string
   traceId: string
   type: string
+}
+
+export type ReviewType = {
+  id?: number
+  summary: string
+  body: string
+  createdAt?: string
+  VenueId: number
 }

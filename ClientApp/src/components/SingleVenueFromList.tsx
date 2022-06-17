@@ -10,6 +10,7 @@ export function SingleVenueFromList(props: SingleVenueFromListProps) {
         <Link to={urlForShowingVenue}>{props.venue.name}</Link>
       </h2>
       <address>{props.venue.address}</address>
+      <p>{props.venue.reviews.length} Reviews</p>
     </li>
   )
 }
