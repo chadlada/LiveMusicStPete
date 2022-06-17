@@ -3,7 +3,7 @@ import React from 'react'
 export function SignUp() {
   return (
     <>
-      <div className="allinputs">
+      <div className="allinputssignup">
         <div className="field">
           <label className="label">Name</label>
           <div className="control">

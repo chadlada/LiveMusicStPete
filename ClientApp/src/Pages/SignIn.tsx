@@ -3,7 +3,7 @@ import React from 'react'
 export function SignIn() {
   return (
     <>
-      <div className="allinputs">
+      <div className="allinputssignin">
         <div className="field">
           <label className="label">Email</label>
           <div className="control">
