@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ReviewType, VenueType } from '../types'
+import format from 'date-fns/format'
 
 async function loadOneVenue(id: string) {
   const response = await fetch(`/api/venues/${id}`)
@@ -37,6 +38,8 @@ const NullVenue: VenueType = {
 }
 
 export function Venue() {
+  const dateFormat = `EEEE, MMMM do, yyyy 'at' h:mm aaa`
+
   const { id } = useParams<{ id: string }>()
 
   const { refetch: reloadRestaurant, data: venue = NullVenue } =
@@ -71,12 +74,14 @@ export function Venue() {
     <>
       <div className="allinputs">
         <h2 className="h2-venue">{venue.name}</h2>
-        <p>{venue.address}</p>
-        Reviews:{venue.reviews.length}
+        <p className="p-venue-address">{venue.address}</p>
+        <p className="p-review-count"> Reviews:{venue.reviews.length}</p>
+
         <ul className="reviews">
           {venue.reviews.map((review) => (
             <li key={review.id}>
               <div className="author">
+                <br />
                 <p>
                   Joe Said:<em> {review.summary}</em>
                 </p>
@@ -84,7 +89,11 @@ export function Venue() {
               <div className="review-body">
                 <p>{review.body}</p>
               </div>
-              <time>{review.createdAt}</time>
+              <time>
+                {review.createdAt
+                  ? format(new Date(review.createdAt), dateFormat)
+                  : null}
+              </time>{' '}
             </li>
           ))}
         </ul>
