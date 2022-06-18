@@ -26,5 +26,5 @@ export type ReviewType = {
   summary: string
   body: string
   createdAt?: string
-  VenueId: number
+  venueId: number
 }
