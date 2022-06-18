@@ -25,7 +25,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   // width: 200px;
-  height: 100vh;
+  height: 112vh;
 }
 
 h1 {
@@ -36,10 +36,13 @@ h1 {
 
 .nav-top {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   padding-top: 1rem;
 }
 
+.h1-landing {
+  padding-left: 1rem;
+}
 header {
   // background-color: #bb89ba;
   opacity: 0.8;
@@ -47,7 +50,7 @@ header {
 }
 nav {
   text-align: center;
-  margin-top: -27px;
+  // margin-top: -27px;
 }
 
 h2 {
@@ -61,6 +64,10 @@ h2 {
 }
 .p-venue-address {
   text-align: center;
+}
+
+.search {
+  margin-bottom: 1rem;
 }
 
 .p-review-count {
@@ -85,6 +92,10 @@ p.landing {
   padding: 11px;
 }
 
+.single-venue {
+  border-bottom: solid 1px;
+}
+
 time {
   font-size: 10px;
 }
@@ -106,10 +117,6 @@ main.home-content {
   border-radius: 1rem;
   margin-bottom: 3rem;
   border: solid;
-}
-
-.search {
-  padding-left: 4rem;
 }
 
 .results {
@@ -181,7 +188,12 @@ footer {
   bottom: 0;
   position: fixed;
   width: 100%;
-  background-color: #eac8aa;
+  background-color: #fdfdf1;
+}
+
+.border-venue {
+  border: solid 0.5px;
+  width: 20rem;
 }
 
 .fa-github {
@@ -190,10 +202,27 @@ footer {
   margin-left: 4px;
 }
 
+.button.is-primary {
+  background-color: black;
+}
+
+a {
+  color: black;
+}
+
 // ------------------------------------------------------------------------------------------------------------
 // @Media
 
 @media all and (max-width: 494px) {
+  body {
+    margin: 0;
+    min-height: 100%;
+    background-image: url('./images/palmtrees.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    // width: 200px;
+    height: 104vh;
+  }
   main.home-content {
     background-color: #c6c5c5;
     opacity: 0.9;
@@ -213,6 +242,12 @@ footer {
     background-color: #faeddd;
     width: 20rem;
     border-radius: 1rem;
+  }
+
+  .nav-top {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 1rem;
   }
 
   address {

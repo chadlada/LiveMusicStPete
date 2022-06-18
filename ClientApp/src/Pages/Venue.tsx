@@ -105,6 +105,7 @@ export function Venue() {
             }
           }}
         >
+          <div className="border-venue"></div>
           <div className="field">
             <label className="label">Summary</label>
             <div className="control">

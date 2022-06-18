@@ -5,7 +5,7 @@ import { VenueType } from '../types'
 export function SingleVenueFromList(props: SingleVenueFromListProps) {
   const urlForShowingVenue = `/venue/${props.venue.id}`
   return (
-    <li>
+    <li className="single-venue">
       <h2>
         <Link to={urlForShowingVenue}>{props.venue.name}</Link>
       </h2>

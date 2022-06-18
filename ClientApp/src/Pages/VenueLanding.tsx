@@ -60,7 +60,6 @@ export function VenueLanding() {
             return <SingleVenueFromList key={venue.id} venue={venue} />
           })}
         </ul>
-        <br />
       </main>
     </>
   )

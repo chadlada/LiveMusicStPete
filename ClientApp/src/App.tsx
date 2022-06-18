@@ -19,12 +19,13 @@ export function App() {
           <Link to="/">
             <i className="fa-solid fa-house"></i>
           </Link>
-          <h1>Live Music - St Pete</h1>
+          <h1 className="h1-landing">Live Music - St Pete</h1>
         </div>
 
         <nav>
           <br />
-          <Link to="/signup">SignUp</Link>-<Link to="/signin"> SignIn </Link>-
+          <Link to="/signup">SignUp</Link>&nbsp;|&nbsp;
+          <Link to="/signin"> SignIn </Link>&nbsp;|&nbsp;
           <Link to="new">Add Venue</Link>
         </nav>
         <i>Welcome Back, Steve!</i>
