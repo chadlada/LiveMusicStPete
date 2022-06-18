@@ -28,3 +28,9 @@ export type ReviewType = {
   createdAt?: string
   venueId: number
 }
+
+export type NewUserType = {
+  fullName: string
+  email: string
+  password: string
+}
