@@ -18,5 +18,10 @@ namespace LiveMusicStPete.Models
 
         //One venue has many reviews
         public List<Review> Reviews { get; set; }
+
+        // Adds the DB column
+        public int UserId { get; set; }
+        // The actual associated object
+public User User { get; set; }
     }
 }

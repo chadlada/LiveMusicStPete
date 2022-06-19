@@ -12,5 +12,10 @@ namespace LiveMusicStPete.Models
 //Review belongs to one venue
         public int VenueId { get; set; }
         public Venue Venue { get; set; }
+
+        // Adds the DB column
+        public int UserId { get; set; }
+        // The actual associated object
+public User User { get; set; }
     }
 }

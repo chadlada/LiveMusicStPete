@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -132,8 +134,12 @@ var venue = await _context.Venues.Include(venue => venue.Reviews).Where(venue =>
         // new values for the record.
         //
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Venue>> PostVenue(Venue venue)
         {
+            // Set the UserID to the current user id, this overrides anything the user specifies.
+            venue.UserId = GetCurrentUserId();
+
             // Indicate to the database context we want to add this new record
             _context.Venues.Add(venue);
             await _context.SaveChangesAsync();
@@ -175,5 +181,12 @@ var venue = await _context.Venues.Include(venue => venue.Reviews).Where(venue =>
         {
             return _context.Venues.Any(venue => venue.Id == id);
         }
+
+        // Private helper method to get the JWT claim related to the user ID
+private int GetCurrentUserId()
+{
+    // Get the User Id from the claim and then parse it as an integer.
+    return int.Parse(User.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
+}
     }
 }

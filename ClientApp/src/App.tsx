@@ -34,7 +34,7 @@ export function App() {
                 handleLogout()
               }}
             >
-              Sign out
+              <i className="fa-solid fa-arrow-right-from-bracket"></i>
             </a>
           ) : null}
         </div>
@@ -89,10 +89,13 @@ function LoggedInNav() {
 
   return (
     <>
-      <Link to="/new">Add Venue</Link>
+      <Link to="/new">
+        <i className="fa-solid fa-plus"></i>
+        <span className="add-venue-text">Venue</span>
+      </Link>
 
       <br />
-      <i>Welcome Back, {user.fullName}!</i>
+      <p className="welcome-back">Welcome Back, {user.fullName}!</p>
     </>
   )
 }

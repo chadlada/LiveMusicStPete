@@ -3,7 +3,7 @@ import { useMutation, useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ReviewType, VenueType } from '../types'
 import format from 'date-fns/format'
-import { isLoggedIn } from '../auth'
+import { authHeader, isLoggedIn } from '../auth'
 
 async function loadOneVenue(id: string) {
   const response = await fetch(`/api/venues/${id}`)
@@ -18,7 +18,10 @@ async function loadOneVenue(id: string) {
 async function submitNewReview(review: ReviewType) {
   const response = await fetch(`/api/Reviews`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      Authorization: authHeader(),
+    },
     body: JSON.stringify(review),
   })
 

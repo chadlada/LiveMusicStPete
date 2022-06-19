@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router'
+import { authHeader } from '../auth'
 import { APIError, VenueType } from '../types'
 
 async function submitNewVenue(venueToCreate: VenueType) {
   const response = await fetch('/api/Venues', {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      Authorization: authHeader(),
+    },
     body: JSON.stringify(venueToCreate),
   })
 
