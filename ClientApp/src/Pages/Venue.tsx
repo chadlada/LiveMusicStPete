@@ -3,6 +3,7 @@ import { useMutation, useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ReviewType, VenueType } from '../types'
 import format from 'date-fns/format'
+import { isLoggedIn } from '../auth'
 
 async function loadOneVenue(id: string) {
   const response = await fetch(`/api/venues/${id}`)
@@ -97,39 +98,42 @@ export function Venue() {
             </li>
           ))}
         </ul>
-        <form
-          onSubmit={function (event) {
-            {
-              event.preventDefault()
-              createNewReview.mutate(newReview)
-            }
-          }}
-        >
-          <div className="border-venue"></div>
-          <div className="field">
-            <label className="label">Summary</label>
-            <div className="control">
-              <input
-                name="summary"
-                type="text"
-                value={newReview.summary}
-                onChange={handleNewReviewTextFieldChange}
-              />
+
+        {isLoggedIn() ? (
+          <form
+            onSubmit={function (event) {
+              {
+                event.preventDefault()
+                createNewReview.mutate(newReview)
+              }
+            }}
+          >
+            <div className="border-venue"></div>
+            <div className="field">
+              <label className="label">Summary</label>
+              <div className="control">
+                <input
+                  name="summary"
+                  type="text"
+                  value={newReview.summary}
+                  onChange={handleNewReviewTextFieldChange}
+                />
+              </div>
             </div>
-          </div>
-          <div className="field">
-            <label className="label">Review</label>
-            <div className="control">
-              <input
-                name="body"
-                type="text"
-                value={newReview.body}
-                onChange={handleNewReviewTextFieldChange}
-              />
+            <div className="field">
+              <label className="label">Review</label>
+              <div className="control">
+                <input
+                  name="body"
+                  type="text"
+                  value={newReview.body}
+                  onChange={handleNewReviewTextFieldChange}
+                />
+              </div>
             </div>
-          </div>
-          <button className="button is-primary is-rounded">Submit</button>
-        </form>
+            <button className="button is-primary is-rounded">Submit</button>
+          </form>
+        ) : null}
       </div>
     </>
   )

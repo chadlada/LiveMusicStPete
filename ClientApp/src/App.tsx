@@ -4,14 +4,19 @@ import { Venue } from './Pages/Venue'
 import { VenueLanding } from './Pages/VenueLanding'
 import { SignUp } from './Pages/SignUp'
 import { SignIn } from './Pages/SignIn'
-import git from './images/GitHub-Mark.png'
 import linkedin from './images/linkedin.png'
 import { Route, Routes } from 'react-router'
 import { Link } from 'react-router-dom'
-import { config } from '@fortawesome/fontawesome-svg-core'
-console.log(config.autoA11y) // true
+// import { config } from '@fortawesome/fontawesome-svg-core'
+import { getUser, isLoggedIn, logout } from './auth'
 
 export function App() {
+  function handleLogout() {
+    logout()
+
+    window.location.assign('/')
+  }
+
   return (
     <div>
       <header>
@@ -20,15 +25,21 @@ export function App() {
             <i className="fa-solid fa-house"></i>
           </Link>
           <h1 className="h1-landing">Live Music - St Pete</h1>
+          {isLoggedIn() ? (
+            <a
+              href="/"
+              className="link"
+              onClick={function (event) {
+                event.preventDefault()
+                handleLogout()
+              }}
+            >
+              Sign out
+            </a>
+          ) : null}
         </div>
 
-        <nav>
-          <br />
-          <Link to="/signup">SignUp</Link>&nbsp;|&nbsp;
-          <Link to="/signin"> SignIn </Link>&nbsp;|&nbsp;
-          <Link to="new">Add Venue</Link>
-        </nav>
-        <i>Welcome Back, Steve!</i>
+        <nav>{isLoggedIn() ? <LoggedInNav /> : <LoggedOutNav />}</nav>
       </header>
       <br />
 
@@ -68,5 +79,29 @@ export function App() {
         {/* </div> */}
       </footer>
     </div>
+  )
+}
+
+// ------------------------------------------------Functions------------------------------------------------
+
+function LoggedInNav() {
+  const user = getUser()
+
+  return (
+    <>
+      <Link to="/new">Add Venue</Link>
+
+      <br />
+      <i>Welcome Back, {user.fullName}!</i>
+    </>
+  )
+}
+
+function LoggedOutNav() {
+  return (
+    <>
+      <Link to="/signup">SignUp</Link>
+      <Link to="/signin"> SignIn </Link>
+    </>
   )
 }
