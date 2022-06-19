@@ -59,8 +59,12 @@ if (filter == null) {
         [HttpGet("{id}")]
         public async Task<ActionResult<Venue>> GetVenue(int id)
         {
-// Find the restaurant in the database using Include to ensure we have the associated reviews
-var venue = await _context.Venues.Include(venue => venue.Reviews).Where(venue => venue.Id == id).FirstOrDefaultAsync();
+// Find the venue in the database using Include to ensure we have the associated reviews
+var venue = await _context.Venues.
+                                    Where(venue => venue.Id == id).
+                                    Include(venue => venue.Reviews).
+                                    ThenInclude(review => review.User).
+                                    FirstOrDefaultAsync();
 
             // If we didn't find anything, we receive a `null` in return
             if (venue == null)

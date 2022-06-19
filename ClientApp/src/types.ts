@@ -27,6 +27,19 @@ export type ReviewType = {
   body: string
   createdAt?: string
   venueId: number
+  user: {
+    id: number
+    fullName: string
+    email: string
+  }
+}
+
+export type NewReviewType = {
+  id: number | undefined
+  summary: string
+  body: string
+  createdAt: Date
+  venueId: number
 }
 
 export type NewUserType = {

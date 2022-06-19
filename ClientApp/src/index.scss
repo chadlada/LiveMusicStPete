@@ -105,11 +105,12 @@ p.landing {
 //   color: #b91515;
 // }
 .review-body {
-  background-color: white;
   border-radius: 10px;
   width: 20rem;
   font-size: 14px;
   padding: 11px;
+  background-color: #9d4444;
+  color: white;
 }
 
 .single-venue {
@@ -321,7 +322,8 @@ a {
   }
 
   .uploadpic {
-    margin-bottom: 2rem;
+    width: 34rem;
+    rgin-bottom: 2rem;
     margin-top: 2rem;
   }
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
-import { ReviewType, VenueType } from '../types'
+import { NewReviewType, VenueType } from '../types'
 import format from 'date-fns/format'
 import { authHeader, isLoggedIn } from '../auth'
 
@@ -15,7 +15,7 @@ async function loadOneVenue(id: string) {
   }
 }
 
-async function submitNewReview(review: ReviewType) {
+async function submitNewReview(review: NewReviewType) {
   const response = await fetch(`/api/Reviews`, {
     method: 'POST',
     headers: {
@@ -60,9 +60,11 @@ export function Venue() {
     },
   })
 
-  const [newReview, setNewReview] = useState<ReviewType>({
+  const [newReview, setNewReview] = useState<NewReviewType>({
+    id: undefined,
     body: '',
     summary: '',
+    createdAt: new Date(),
     venueId: Number(id),
   })
 
@@ -87,7 +89,7 @@ export function Venue() {
               <div className="author">
                 <br />
                 <p>
-                  Joe Said:<em> {review.summary}</em>
+                  {review.user.fullName} Said:<em> {review.summary}</em>
                 </p>
               </div>
               <div className="review-body">
