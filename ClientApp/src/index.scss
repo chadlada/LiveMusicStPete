@@ -70,7 +70,10 @@ h2 {
 .search {
   margin-bottom: 1rem;
 }
-
+.music-image {
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
 .add-venue-text {
   // Can just put this in span instead since not used by anything else..
   font-family: 'Anton', sans-serif;
@@ -322,6 +325,12 @@ a {
     overflow: scroll;
     height: 33rem;
     border: solid;
+  }
+
+  .music-image {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-left: 9px;
   }
 
   p.landing {

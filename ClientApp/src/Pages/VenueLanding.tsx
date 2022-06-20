@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 
-import map from '../images/mapstpete.png'
+import musiccc from '../images/findlivemusic.png'
 import { VenueType } from '../types'
 import { SingleVenueFromList } from '../components/SingleVenueFromList'
 
@@ -47,15 +47,13 @@ export function VenueLanding() {
         </form>
         <br />
 
-        <section className="map">
-          <img
-            className="mapmap"
-            alt="Example Map"
-            src={map}
-            width="250"
-            height="200"
-          />
-        </section>
+        <img
+          className="music-image"
+          alt="musician"
+          src={musiccc}
+          width="288"
+          height="200"
+        />
 
         <ul className="results">
           {venues.map(function (venue) {
