@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LiveMusicStPete.Models;
+using Geocoding.Microsoft;
+using Microsoft.Extensions.Configuration;
 
 namespace LiveMusicStPete.Controllers
 {
@@ -21,11 +23,14 @@ namespace LiveMusicStPete.Controllers
         // This is the variable you use to have access to your database
         private readonly DatabaseContext _context;
 
+        private readonly string BING_MAPS_KEY;
+
         // Constructor that recives a reference to your database context
         // and stores it in _context for you to use in your API methods
-        public VenuesController(DatabaseContext context)
+        public VenuesController(DatabaseContext context, IConfiguration config)
         {
             _context = context;
+            BING_MAPS_KEY = config["BING_MAPS_KEY"];
         }
 
         // GET: api/Venues
@@ -39,12 +44,12 @@ namespace LiveMusicStPete.Controllers
             // them by row id and return them as a JSON array.
 if (filter == null) {
             return await _context.Venues.OrderBy(row => row.Id)
-            .Include(restaurant => restaurant.Reviews)
+            .Include(venue => venue.Reviews)
             .ToListAsync();
 } else {
     // Return the filtered list of venues
      return await _context.Venues.Where(venue => venue.Name.ToLower().Contains(filter.ToLower()))
-     .Include(restaurant => restaurant.Reviews)
+     .Include(venue => venue.Reviews)
      .ToListAsync();
 }
 
@@ -141,9 +146,25 @@ var venue = await _context.Venues.
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Venue>> PostVenue(Venue venue)
         {
-            // Set the UserID to the current user id, this overrides anything the user specifies.
-            venue.UserId = GetCurrentUserId();
+      
 
+            // Create a new geocoder
+var geocoder = new BingMapsGeocoder(BING_MAPS_KEY);
+
+// Request this address to be geocoded.
+var geocodedAddresses = await geocoder.GeocodeAsync(venue.Address);
+
+// ... and pick out the best address sorted by the confidence level
+var bestGeocodedAddress = geocodedAddresses.OrderBy(address => address.Confidence).LastOrDefault();
+
+// If we have a best geocoded address, use the latitude and longitude from that result
+if (bestGeocodedAddress != null)
+{
+    venue.Lat = bestGeocodedAddress.Coordinates.Latitude;
+    venue.Lng = bestGeocodedAddress.Coordinates.Longitude;
+}
+      // Set the UserID to the current user id, this overrides anything the user specifies.
+            venue.UserId = GetCurrentUserId();
             // Indicate to the database context we want to add this new record
             _context.Venues.Add(venue);
             await _context.SaveChangesAsync();

@@ -29,12 +29,14 @@ export function VenueLanding() {
   return (
     <>
       <br />
-      <p className="landing">
-        Find local live music venues in the Sunshine City!
-      </p>
+
       <main className="allinputs">
+        <p className="landing">
+          Find local live music venues in the Sunshine City!
+        </p>
         <form className="search">
           <input
+            className="search-search"
             type="text"
             placeholder="Search..."
             value={filterText}
