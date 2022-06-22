@@ -18,6 +18,7 @@ namespace LiveMusicStPete.Models
         public double Lat { get; set; }
         public double Lng { get; set; }
         public string Telephone { get; set; }
+        public string PhotoURL { get; set; }
 
         //One venue has many reviews
         public List<Review> Reviews { get; set; }

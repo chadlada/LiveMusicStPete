@@ -5,7 +5,7 @@ import { NewReviewType, VenueType } from '../types'
 import format from 'date-fns/format'
 import { authHeader, isLoggedIn } from '../auth'
 
-async function loadOneVenue(id: string) {
+async function loadOneVenue(id: string | undefined) {
   const response = await fetch(`/api/venues/${id}`)
 
   if (response.ok) {
@@ -32,26 +32,28 @@ async function submitNewReview(review: NewReviewType) {
   }
 }
 
-const NullVenue: VenueType = {
-  id: undefined,
-  name: '',
-  address: '',
-  description: '',
-  telephone: '',
-  reviews: [],
-}
-
 export function Venue() {
-  const dateFormat = `EEEE, MMMM do, yyyy 'at' h:mm aaa`
-
   const { id } = useParams<{ id: string }>()
 
-  const { refetch: reloadRestaurant, data: venue = NullVenue } =
-    useQuery<VenueType>(['one-venue', id], () => loadOneVenue(id))
+  const NullVenue: VenueType = {
+    id: undefined,
+    name: '',
+    address: '',
+    description: '',
+    telephone: '',
+    reviews: [],
+  }
+
+  const dateFormat = `EEEE, MMMM do, yyyy 'at' h:mm aaa`
+
+  const { refetch: reloadVenue, data: venue = NullVenue } = useQuery<VenueType>(
+    ['one-venue', id],
+    () => loadOneVenue(id)
+  )
 
   const createNewReview = useMutation(submitNewReview, {
     onSuccess: function () {
-      reloadRestaurant()
+      reloadVenue()
       setNewReview({
         ...newReview,
         body: '',
@@ -76,6 +78,7 @@ export function Venue() {
 
     setNewReview({ ...newReview, [name]: value })
   }
+
   return (
     <>
       <div className="allinputs">

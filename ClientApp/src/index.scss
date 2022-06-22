@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Cedarville+Cursive&family=Fascinate&family=Raleway:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Cedarville+Cursive&family=Dosis&family=Fascinate&family=Raleway:wght@100&display=swap');
+
 :root {
   --red-0: #991d42;
   font: 16px / 1 sans-serif;
@@ -38,10 +39,13 @@ h1 {
   display: flex;
   justify-content: center;
   padding-top: 1rem;
+  background-color: #b91515;
 }
 
 .h1-landing {
   // padding-left: 1rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
 }
 header {
   // background-color: #bb89ba;
@@ -78,9 +82,12 @@ h2 {
   // Can just put this in span instead since not used by anything else..
   font-family: 'Anton', sans-serif;
   font-size: 1.29rem;
-  color: #b91515;
+  color: black;
 }
 
+.fa-house:hover {
+  color: black;
+}
 .p-review-count {
   text-align: center;
   border-bottom: solid 1px;
@@ -98,11 +105,13 @@ h2 {
 
 p.landing {
   text-align: center;
-  background-color: #eeeae5;
-  width: 33rem;
+  background-color: #fcfdef;
+  width: 34rem;
   padding: 1rem;
   margin-top: -2rem;
   margin-bottom: 1rem;
+  font-family: 'Dosis', sans-serif;
+  font-size: 1.5rem;
 }
 
 .welcome-back {
@@ -169,7 +178,7 @@ time {
 
 .fa-house {
   font-size: 2rem;
-  color: #665c5c;
+  color: #c1abab;
 }
 .fa-solid {
   font-size: 2rem;
@@ -179,7 +188,11 @@ time {
   color: #665c5c;
 }
 .fa-arrow-right-from-bracket {
-  color: #b91515;
+  color: #c1abab;
+}
+
+.fa-arrow-right-from-bracket:hover {
+  color: black;
 }
 
 .fa-music {
@@ -261,7 +274,10 @@ footer {
   bottom: 0;
   position: fixed;
   width: 100%;
-  background-color: #fdfdf1;
+  background-color: #b91515;
+  color: #c1abab;
+  opacity: 0.9;
+  font-family: 'Dosis', sans-serif;
 }
 
 .border-venue {
@@ -327,6 +343,11 @@ a {
     border: solid;
   }
 
+  .h1-landing {
+    margin-left: 0rem;
+    margin-right: 0rem;
+  }
+
   .music-image {
     border-radius: 10px;
     margin-bottom: 10px;
@@ -337,13 +358,14 @@ a {
     text-align: center;
     background-color: #faeddd;
     width: 22rem;
-    font-size: 13px;
+    font-size: 1rem;
   }
 
   .nav-top {
     display: flex;
     justify-content: space-evenly;
     padding-top: 1rem;
+    background-color: #b91515;
   }
 
   address {

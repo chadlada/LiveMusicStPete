@@ -11,20 +11,17 @@ export function VenueLanding() {
   const { data: venues = [] } = useQuery<VenueType[]>(
     ['venues', filterText],
     async function () {
-      // let url = '/api/venues'
-
-      // if (filterText.length !== 0) {
-      //   url = `/api/venues?filter=${filterText}`
-      // }
       const url =
         filterText.length === 0
           ? 'api/venues'
           : `api/venues?filter=${filterText}`
 
       const response = await fetch(url)
+      console.log(response)
       return response.json()
     }
   )
+
 
   return (
     <>
