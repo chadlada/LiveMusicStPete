@@ -6,10 +6,12 @@ export interface CSSStarsProperties extends CSSProperties {
 
 export type VenueType = {
   id: number | undefined
+  userId: number
   name: string
   description: string
   address: string
   telephone: string
+  photoURL: string
   reviews: ReviewType[]
 }
 
@@ -62,4 +64,10 @@ export type LoggedInUser = {
 export type LoginSuccess = {
   token: string
   user: LoggedInUser
+}
+
+
+
+export type UploadResponse = {
+  url: string
 }

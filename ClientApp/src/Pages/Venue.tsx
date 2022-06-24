@@ -3,44 +3,22 @@ import { useMutation, useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { NewReviewType, VenueType } from '../types'
 import format from 'date-fns/format'
-import { authHeader, isLoggedIn } from '../auth'
+import { authHeader, getUserId, isLoggedIn } from '../auth'
 
-async function loadOneVenue(id: string | undefined) {
-  const response = await fetch(`/api/venues/${id}`)
-
-  if (response.ok) {
-    return response.json()
-  } else {
-    throw await response.json()
-  }
-}
-
-async function submitNewReview(review: NewReviewType) {
-  const response = await fetch(`/api/Reviews`, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      Authorization: authHeader(),
-    },
-    body: JSON.stringify(review),
-  })
-
-  if (response.ok) {
-    return response.json()
-  } else {
-    throw await response.json()
-  }
-}
 
 export function Venue() {
+  // const navigate = useNavigate()
+
   const { id } = useParams<{ id: string }>()
 
   const NullVenue: VenueType = {
     id: undefined,
+    userId: 0,
     name: '',
     address: '',
     description: '',
     telephone: '',
+    photoURL: '',
     reviews: [],
   }
 
@@ -70,6 +48,33 @@ export function Venue() {
     venueId: Number(id),
   })
 
+  async function loadOneVenue(id: string | undefined) {
+    const response = await fetch(`/api/venues/${id}`)
+
+    if (response.ok) {
+      return response.json()
+    } else {
+      throw await response.json()
+    }
+  }
+
+  async function submitNewReview(review: NewReviewType) {
+    const response = await fetch(`/api/Reviews`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        Authorization: authHeader(),
+      },
+      body: JSON.stringify(review),
+    })
+
+    if (response.ok) {
+      return response.json()
+    } else {
+      throw await response.json()
+    }
+  }
+
   function handleNewReviewTextFieldChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
@@ -85,7 +90,14 @@ export function Venue() {
         <h2 className="h2-venue">{venue.name}</h2>
         <p className="p-venue-address">{venue.address}</p>
         <p className="p-review-count"> Reviews:{venue.reviews.length}</p>
-
+<p>
+        {venue.photoURL ? (
+          <img alt="Venue Photo" width={200} src={venue.photoURL} />
+        ) : null}
+</p>
+<p>
+        {venue.userId === getUserId() ?  <button>Delete</button> : null}
+</p>
         <ul className="reviews">
           {venue.reviews.map((review) => (
             <li key={review.id}>
