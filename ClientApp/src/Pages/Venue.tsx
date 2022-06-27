@@ -1,15 +1,33 @@
 import React, { useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { NewReviewType, VenueType } from '../types'
 import format from 'date-fns/format'
 import { authHeader, getUserId, isLoggedIn } from '../auth'
 
 
 export function Venue() {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const { id } = useParams<{ id: string }>()
+
+  async function handleDelete(id: number | undefined) {
+    // if we don't know the ID don't do anything
+    if (id === undefined) {
+      return
+    }
+    // event.preventDefault()
+
+    const response = await fetch(`/api/Venues/${id}`, {
+      method: 'DELETE',
+      headers: { 'content-type': 'application/json', 
+      Authorization: authHeader() },
+    })
+
+    if (response.status === 200 || response.status === 204) {
+      navigate('/')
+    }
+  }
 
   const NullVenue: VenueType = {
     id: undefined,
@@ -40,6 +58,16 @@ export function Venue() {
     },
   })
 
+  const deleteVenue = useMutation(handleDelete,  {
+    onSuccess: function () {
+      navigate('/')
+    },
+    onError: function() {
+      //TODO: Make a beter error handling here
+      console.log('ooops')
+    }
+  })
+
   const [newReview, setNewReview] = useState<NewReviewType>({
     id: undefined,
     body: '',
@@ -58,7 +86,14 @@ export function Venue() {
     }
   }
 
+
+//Takes a review object and submits it to the API
+//
+//Returns a promise of the JSON response of the API 
+// when success, throws the JSON response of the API 
+//When there is a failure
   async function submitNewReview(review: NewReviewType) {
+    //Calls fetch
     const response = await fetch(`/api/Reviews`, {
       method: 'POST',
       headers: {
@@ -69,6 +104,7 @@ export function Venue() {
     })
 
     if (response.ok) {
+      //return the JSON
       return response.json()
     } else {
       throw await response.json()
@@ -96,7 +132,18 @@ export function Venue() {
         ) : null}
 </p>
 <p>
-        {venue.userId === getUserId() ?  <button>Delete</button> : null}
+        {
+        venue.userId === getUserId() 
+        ? ( <button onClick={function(event) {
+          event.preventDefault()
+
+          deleteVenue.mutate(venue.id)
+
+        }}
+        >
+          Delete</button>) 
+        : null
+        }
 </p>
         <ul className="reviews">
           {venue.reviews.map((review) => (

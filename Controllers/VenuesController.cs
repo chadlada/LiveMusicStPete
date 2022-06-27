@@ -181,6 +181,8 @@ if (bestGeocodedAddress != null)
         // to grab the id from the URL. It is then made available to us as the `id` argument to the method.
         //
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
         public async Task<IActionResult> DeleteVenue(int id)
         {
             // Find this venue by looking for the specific id
@@ -191,6 +193,18 @@ if (bestGeocodedAddress != null)
                 return NotFound();
             }
 
+            if (venue.UserId != GetCurrentUserId())
+            {
+                // Make a custom error response
+                var response = new
+                {
+                    status = 401,
+                    errors = new List<string>() { "Not Authorized" }
+                };
+
+                // Return our error with the custom response
+                return Unauthorized(response);
+            }
             // Tell the database we want to remove this record
             _context.Venues.Remove(venue);
 

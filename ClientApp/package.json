@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "17.x"
+  },
   "name": "react-project-template",
   "version": "0.0.0",
   "scripts": {
