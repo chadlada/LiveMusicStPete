@@ -1,18 +1,40 @@
 import React, { useState } from 'react'
-import { useMutation } from 'react-query'
-import { useNavigate } from 'react-router'
+import { useMutation, useQuery } from 'react-query'
+import { useNavigate, useParams } from 'react-router'
 import { authHeader } from '../auth'
 import { APIError, UploadResponse, VenueType } from '../types'
 import { useDropzone } from 'react-dropzone'
 
+  async function loadOneVenue(id: string | undefined) {
+    const response = await fetch(`/api/venues/${id}`)
+
+    if (response.ok) {
+      return response.json()
+    } else {
+      throw await response.json()
+    }
+  }
 
 
-export function NewVenue() {
+
+export function EditVenue() {
   const navigate = useNavigate()
+    const { id } = useParams<{ id: string }>()
+
+
+        useQuery<VenueType>(['one-venue', id], () => loadOneVenue(id),
+        {
+          onSuccess: function(venueBeingLoaded){
+            setUpdatingVenue(venueBeingLoaded)
+          },
+        }
+
+        )
+
   const [isUploading, setIsUploading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
 
-  const [newVenue, setNewVenue] = useState<VenueType>({
+  const [updatingVenue, setUpdatingVenue] = useState<VenueType>({
     id: undefined,
     userId: 0,
     name: '',
@@ -33,21 +55,21 @@ export function NewVenue() {
           const value = event.target.value
           const fieldName = event.target.name
 
-          const updatedVenue = { ...newVenue, [fieldName]: value }
+          const updatedVenue = { ...updatingVenue, [fieldName]: value }
 
-          setNewVenue(updatedVenue)
+          setUpdatingVenue(updatedVenue)
         }
 
      async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
        event.preventDefault()
-       createNewVenue.mutate(newVenue)
+       updateTheVenue.mutate(updatingVenue)
      }
 
   
 
        
 
-  const createNewVenue = useMutation(submitNewVenue, {
+  const updateTheVenue = useMutation(submitEditedVenue, {
     onSuccess: function () {
       // This happens if we successfuly update venue
       navigate('/')
@@ -59,14 +81,14 @@ export function NewVenue() {
   })
 
 
-async function submitNewVenue(venueToCreate: VenueType) {
-  const response = await fetch('/api/Venues', {
-    method: 'POST',
+async function submitEditedVenue(venueToUpdate: VenueType) {
+  const response = await fetch(`/api/Venues/${venueToUpdate.id}`, {
+    method: 'PUT',
     headers: {
       'content-type': 'application/json',
       Authorization: authHeader(),
     },
-    body: JSON.stringify(venueToCreate),
+    body: JSON.stringify(venueToUpdate),
   })
 
   if (response.ok) {
@@ -116,7 +138,7 @@ async function submitNewVenue(venueToCreate: VenueType) {
     onSuccess: function (apiResponse: UploadResponse) {
       const url = apiResponse.url
 
-      setNewVenue({ ...newVenue, photoURL: url })
+      setUpdatingVenue({ ...updatingVenue, photoURL: url })
     },
 
     onError: function (error: string) {
@@ -151,7 +173,7 @@ async function submitNewVenue(venueToCreate: VenueType) {
                 name="name"
                 type="text"
                 placeholder="e.g Venue Name Here.."
-                value={newVenue.name}
+                value={updatingVenue.name}
                 onChange={handleStringFieldChange}
               />
             </div>
@@ -165,7 +187,7 @@ async function submitNewVenue(venueToCreate: VenueType) {
                 name="description"
                 type="text"
                 placeholder="Describe venue here!"
-                value={newVenue.description}
+                value={updatingVenue.description}
                 onChange={handleStringFieldChange}
               />
             </div>
@@ -178,7 +200,7 @@ async function submitNewVenue(venueToCreate: VenueType) {
                 name="address"
                 type="text"
                 placeholder="Address"
-                value={newVenue.address}
+                value={updatingVenue.address}
                 onChange={handleStringFieldChange}
               />
             </div>
@@ -191,18 +213,18 @@ async function submitNewVenue(venueToCreate: VenueType) {
                 name="telephone"
                 type="text"
                 placeholder="Telephone"
-                value={newVenue.telephone}
+                value={updatingVenue.telephone}
                 onChange={handleStringFieldChange}
               />
             </div>
           </div>
           <p className="uploadpic">
-            {newVenue.photoURL && (
+            {updatingVenue.photoURL && (
               <p>
                 <img
-                  alt="Restaurant Photo"
+                  alt="venue Photo"
                   width={200}
-                  src={newVenue.photoURL}
+                  src={updatingVenue.photoURL}
                 />
               </p>
             )}

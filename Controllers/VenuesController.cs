@@ -186,7 +186,8 @@ if (bestGeocodedAddress != null)
         public async Task<IActionResult> DeleteVenue(int id)
         {
             // Find this venue by looking for the specific id
-            var venue = await _context.Venues.FindAsync(id);
+            // var venue = await _context.Venues.FindAsync(id);
+            var venue = await _context.Venues.Where(restaurant => restaurant.UserId == GetCurrentUserId()).FirstOrDefaultAsync();
             if (venue == null)
             {
                 // There wasn't a venue with that id so return a `404` not found

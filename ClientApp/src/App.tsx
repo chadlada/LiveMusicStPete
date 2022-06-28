@@ -9,6 +9,7 @@ import { Route, Routes } from 'react-router'
 import { Link } from 'react-router-dom'
 // import { config } from '@fortawesome/fontawesome-svg-core'
 import { getUser, isLoggedIn, logout } from './auth'
+import { EditVenue } from './Pages/EditVenue'
 
 export function App() {
   function handleLogout() {
@@ -49,6 +50,7 @@ export function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/venue/:id" element={<Venue />} />
+        <Route path="/venue/:id/edit" element={<EditVenue />} />
       </Routes>
       <footer>
         {/* <div className="footer"> */}

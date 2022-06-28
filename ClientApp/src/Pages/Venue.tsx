@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { NewReviewType, VenueType } from '../types'
 import format from 'date-fns/format'
 import { authHeader, getUserId, isLoggedIn } from '../auth'
@@ -126,25 +126,28 @@ export function Venue() {
         <h2 className="h2-venue">{venue.name}</h2>
         <p className="p-venue-address">{venue.address}</p>
         <p className="p-review-count"> Reviews:{venue.reviews.length}</p>
-<p>
-        {venue.photoURL ? (
-          <img alt="Venue Photo" width={200} src={venue.photoURL} />
-        ) : null}
-</p>
-<p>
-        {
-        venue.userId === getUserId() 
-        ? ( <button onClick={function(event) {
-          event.preventDefault()
+        <p>
+          {venue.photoURL ? (
+            <img alt="Venue Photo" width={200} src={venue.photoURL} />
+          ) : null}
+        </p>
+        <p>
+          {venue.userId === getUserId() ? (
+            <>
+              <button
+                className=""
+                onClick={function (event) {
+                  event.preventDefault()
 
-          deleteVenue.mutate(venue.id)
-
-        }}
-        >
-          Delete</button>) 
-        : null
-        }
-</p>
+                  deleteVenue.mutate(venue.id)
+                }}
+              >
+                Delete
+              </button>
+              <Link to={`/venue/${venue.id}/edit`}>Edit</Link>
+            </>
+          ) : null}
+        </p>
         <ul className="reviews">
           {venue.reviews.map((review) => (
             <li key={review.id}>

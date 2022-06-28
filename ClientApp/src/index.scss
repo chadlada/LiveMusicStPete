@@ -299,6 +299,28 @@ a {
   color: black;
 }
 
+.button-edit {
+  border-radius: 9999px;
+padding-left: calc(1em + .25em);
+padding-right: calc(1em + .25em);
+background-color: #b91515;
+color: white;
+}
+
+.button-delete {
+    border-radius: 9999px;
+padding-left: calc(1em + .25em);
+padding-right: calc(1em + .25em);
+background-color: #b91515;
+color: white;
+}
+
+// .is-primary {
+//   display: flex;
+//   justify-content: center;
+//   color:black;
+// }
+
 // ------------------------------------------------------------------------------------------------------------
 // @Media
 
