@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "17.x"
+    "node": "v17.4.0"
   },
   "name": "react-project-template",
   "version": "0.0.0",

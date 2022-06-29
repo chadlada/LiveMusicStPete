@@ -135,7 +135,7 @@ export function Venue() {
           {venue.userId === getUserId() ? (
             <>
               <button
-                className=""
+                className="button-delete"
                 onClick={function (event) {
                   event.preventDefault()
 
@@ -144,7 +144,7 @@ export function Venue() {
               >
                 Delete
               </button>
-              <Link to={`/venue/${venue.id}/edit`}>Edit</Link>
+              <Link className="button-edit" to={`/venue/${venue.id}/edit`}>Edit</Link>
             </>
           ) : null}
         </p>
