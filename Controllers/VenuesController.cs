@@ -42,16 +42,19 @@ namespace LiveMusicStPete.Controllers
         {
             // Uses the database context in `_context` to request all of the Venues, sort
             // them by row id and return them as a JSON array.
-if (filter == null) {
-            return await _context.Venues.OrderBy(row => row.Id)
-            .Include(venue => venue.Reviews)
-            .ToListAsync();
-} else {
-    // Return the filtered list of venues
-     return await _context.Venues.Where(venue => venue.Name.ToLower().Contains(filter.ToLower()))
-     .Include(venue => venue.Reviews)
-     .ToListAsync();
-}
+            if (filter == null)
+            {
+                return await _context.Venues.OrderBy(row => row.Id)
+                .Include(venue => venue.Reviews)
+                .ToListAsync();
+            }
+            else
+            {
+                // Return the filtered list of venues
+                return await _context.Venues.Where(venue => venue.Name.ToLower().Contains(filter.ToLower()))
+                .Include(venue => venue.Reviews)
+                .ToListAsync();
+            }
 
         }
 
@@ -64,12 +67,12 @@ if (filter == null) {
         [HttpGet("{id}")]
         public async Task<ActionResult<Venue>> GetVenue(int id)
         {
-// Find the venue in the database using Include to ensure we have the associated reviews
-var venue = await _context.Venues.
-                                    Where(venue => venue.Id == id).
-                                    Include(venue => venue.Reviews).
-                                    ThenInclude(review => review.User).
-                                    FirstOrDefaultAsync();
+            // Find the venue in the database using Include to ensure we have the associated reviews
+            var venue = await _context.Venues.
+                                                Where(venue => venue.Id == id).
+                                                Include(venue => venue.Reviews).
+                                                ThenInclude(review => review.User).
+                                                FirstOrDefaultAsync();
 
             // If we didn't find anything, we receive a `null` in return
             if (venue == null)
@@ -146,24 +149,24 @@ var venue = await _context.Venues.
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Venue>> PostVenue(Venue venue)
         {
-      
+
 
             // Create a new geocoder
-var geocoder = new BingMapsGeocoder(BING_MAPS_KEY);
+            var geocoder = new BingMapsGeocoder(BING_MAPS_KEY);
 
-// Request this address to be geocoded.
-var geocodedAddresses = await geocoder.GeocodeAsync(venue.Address);
+            // Request this address to be geocoded.
+            var geocodedAddresses = await geocoder.GeocodeAsync(venue.Address);
 
-// ... and pick out the best address sorted by the confidence level
-var bestGeocodedAddress = geocodedAddresses.OrderBy(address => address.Confidence).LastOrDefault();
+            // ... and pick out the best address sorted by the confidence level
+            var bestGeocodedAddress = geocodedAddresses.OrderBy(address => address.Confidence).LastOrDefault();
 
-// If we have a best geocoded address, use the latitude and longitude from that result
-if (bestGeocodedAddress != null)
-{
-    venue.Lat = bestGeocodedAddress.Coordinates.Latitude;
-    venue.Lng = bestGeocodedAddress.Coordinates.Longitude;
-}
-      // Set the UserID to the current user id, this overrides anything the user specifies.
+            // If we have a best geocoded address, use the latitude and longitude from that result
+            if (bestGeocodedAddress != null)
+            {
+                venue.Lat = bestGeocodedAddress.Coordinates.Latitude;
+                venue.Lng = bestGeocodedAddress.Coordinates.Longitude;
+            }
+            // Set the UserID to the current user id, this overrides anything the user specifies.
             venue.UserId = GetCurrentUserId();
             // Indicate to the database context we want to add this new record
             _context.Venues.Add(venue);
@@ -187,7 +190,7 @@ if (bestGeocodedAddress != null)
         {
             // Find this venue by looking for the specific id
             // var venue = await _context.Venues.FindAsync(id);
-            var venue = await _context.Venues.Where(restaurant => restaurant.UserId == GetCurrentUserId()).FirstOrDefaultAsync();
+            var venue = await _context.Venues.Where(venue => venue.UserId == GetCurrentUserId()).FirstOrDefaultAsync();
             if (venue == null)
             {
                 // There wasn't a venue with that id so return a `404` not found
@@ -223,10 +226,10 @@ if (bestGeocodedAddress != null)
         }
 
         // Private helper method to get the JWT claim related to the user ID
-private int GetCurrentUserId()
-{
-    // Get the User Id from the claim and then parse it as an integer.
-    return int.Parse(User.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
-}
+        private int GetCurrentUserId()
+        {
+            // Get the User Id from the claim and then parse it as an integer.
+            return int.Parse(User.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
+        }
     }
 }
