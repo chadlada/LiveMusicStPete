@@ -151,21 +151,21 @@ namespace LiveMusicStPete.Controllers
         {
 
 
-            // Create a new geocoder
-            var geocoder = new BingMapsGeocoder(BING_MAPS_KEY);
+            // // Create a new geocoder
+            // var geocoder = new BingMapsGeocoder(BING_MAPS_KEY);
 
-            // Request this address to be geocoded.
-            var geocodedAddresses = await geocoder.GeocodeAsync(venue.Address);
+            // // Request this address to be geocoded.
+            // var geocodedAddresses = await geocoder.GeocodeAsync(venue.Address);
 
-            // ... and pick out the best address sorted by the confidence level
-            var bestGeocodedAddress = geocodedAddresses.OrderBy(address => address.Confidence).LastOrDefault();
+            // // ... and pick out the best address sorted by the confidence level
+            // var bestGeocodedAddress = geocodedAddresses.OrderBy(address => address.Confidence).LastOrDefault();
 
-            // If we have a best geocoded address, use the latitude and longitude from that result
-            if (bestGeocodedAddress != null)
-            {
-                venue.Lat = bestGeocodedAddress.Coordinates.Latitude;
-                venue.Lng = bestGeocodedAddress.Coordinates.Longitude;
-            }
+            // // If we have a best geocoded address, use the latitude and longitude from that result
+            // if (bestGeocodedAddress != null)
+            // {
+            //     venue.Lat = bestGeocodedAddress.Coordinates.Latitude;
+            //     venue.Lng = bestGeocodedAddress.Coordinates.Longitude;
+            // }
             // Set the UserID to the current user id, this overrides anything the user specifies.
             venue.UserId = GetCurrentUserId();
             // Indicate to the database context we want to add this new record
